@@ -1,14 +1,63 @@
-import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-import './App.css';
+import connection from '../helpers/data/connection';
+import Auth from '../components/Auth/Auth';
 
-class App extends Component {
+import './App.scss';
+import MyNavbar from '../components/MyNavbar/MyNavbar';
+import authRequests from '../helpers/data/authRequests';
+
+class App extends React.Component {
+  state = {
+    authed: false,
+  };
+
+  componentDidMount() {
+    connection();
+
+    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          authed: true,
+        });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.removeListener();
+    this.setState({ authed: false });
+  }
+
+  isAuthenticated = () => {
+    this.setState({
+      authed: true,
+    });
+  };
+
   render() {
+    const logoutClickEvent = () => {
+      authRequests.logoutUser();
+      this.setState({
+        authed: false,
+      });
+    };
+
+    if (!this.state.authed) {
+      return (
+        <div className="App">
+          <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
+          <Auth isAuthenticated={this.isAuthenticated} />
+        </div>
+      );
+    }
     return (
       <div className="App">
+        <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
+        <h3 className="mt-5">You are Authenticated</h3>
         <header className="App-header" />
-        <Button color="primary">primary</Button>{' '}
       </div>
     );
   }
