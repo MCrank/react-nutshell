@@ -1,21 +1,16 @@
 import React from 'react';
 import { GoogleLoginButton } from 'react-social-login-buttons';
-import PropTypes from 'prop-types';
 
-import authRequests from '../../helpers/data/authRequests';
+import authRequests from '../../../helpers/data/authRequests';
 
 import './Auth.scss';
 
 class Auth extends React.Component {
-  static propTypes = {
-    isAuthenticated: PropTypes.func,
-  };
-
   googleAuthenticateUser = () => {
     authRequests
       .authenticate()
       .then(() => {
-        this.props.isAuthenticated();
+        this.props.history.push('/home');
       })
       .catch(error => console.error('There was an error with the Google Auth Request', error));
   };
