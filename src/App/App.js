@@ -7,14 +7,21 @@ import {
 
 import connection from '../helpers/data/connection';
 import Auth from '../components/pages/Auth/Auth';
-
-import './App.scss';
+import Home from '../components/pages/Home/Home';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
+
 import authRequests from '../helpers/data/authRequests';
+import './App.scss';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   // props contains Location, Match, and History
   const routeChecker = props => (authed === false ? <Component {...props} /> : <Redirect to={{ pathname: '/home', state: { from: props.location } }} />);
+  return <Route {...rest} render={props => routeChecker(props)} />;
+};
+
+const PrivateRoute = ({ component: Component, authed, ...rest }) => {
+  // props contains Location, Match, and History
+  const routeChecker = props => (authed === true ? <Component {...props} /> : <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />);
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
@@ -31,20 +38,23 @@ class App extends React.Component {
         this.setState({
           authed: true,
         });
+      } else {
+        this.setState({
+          authed: false,
+        });
       }
     });
   }
 
   componentWillUnmount() {
     this.removeListener();
-    this.setState({ authed: false });
   }
 
-  isAuthenticated = () => {
-    this.setState({
-      authed: true,
-    });
-  };
+  // isAuthenticated = () => {
+  //   this.setState({
+  //     authed: true,
+  //   });
+  // };
 
   render() {
     const logoutClickEvent = () => {
@@ -69,7 +79,9 @@ class App extends React.Component {
             <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
             <div className="row">
               <Switch>
-                <PublicRoute path="/auth" component={Auth} authed={this.state.authed} isAuthenticated={this.isAuthenticated} />
+                <PrivateRoute path="/" exact component={Home} authed={this.state.authed} />
+                <PrivateRoute path="/home" component={Home} authed={this.state.authed} />
+                <PublicRoute path="/auth" component={Auth} authed={this.state.authed} />
               </Switch>
             </div>
           </React.Fragment>
