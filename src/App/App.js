@@ -79,9 +79,9 @@ class App extends React.Component {
             <div className="container">
               <div className="row">
                 <Switch>
+                  <PublicRoute path="/auth" component={Auth} authed={authed} />
                   <PrivateRoute path="/" exact component={Home} authed={authed} />
                   <PrivateRoute path="/home" component={Home} authed={authed} />
-                  <PublicRoute path="/auth" component={Auth} authed={authed} />
                   <PrivateRoute path="/friends" component={Friends} authed={authed} />
                   <PrivateRoute path="/articles" component={Articles} authed={authed} />
                   <PrivateRoute path="/weather" component={Weather} authed={authed} />
