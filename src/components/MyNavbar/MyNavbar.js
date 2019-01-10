@@ -24,32 +24,32 @@ class MyNavbar extends React.Component {
           <Nav className="ml-auto" navbar>
             <NavItem>
               <NavLink tag={RRNavLink} to="/friends">
-                Friends
+                <i className="fas fa-users fa-2x" />
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={RRNavLink} to="/articles">
-                Articles
+                <i className="far fa-newspaper fa-2x" />
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={RRNavLink} to="/weather">
-                Weather
+                <i className="fas fa-cloud-sun-rain fa-2x" />
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={RRNavLink} to="/events">
-                Events
+                <i className="fas fa-calendar-alt fa-2x" />
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={RRNavLink} to="/messages">
-                Messages
+                <i className="far fa-comments fa-2x" />
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={RRNavLink} onClick={logoutClickEvent} to="/home">
-                Logout
+                <i className="fas fa-sign-out-alt fa-2x" />
               </NavLink>
             </NavItem>
           </Nav>
