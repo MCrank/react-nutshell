@@ -10,13 +10,17 @@ class Friends extends React.Component {
   };
 
   componentDidMount() {
+    this.getAllUserFriends();
+  }
+
+  getAllUserFriends = () => {
     smashRequests
       .usersAndFriends(authRequests.getCurrentUid())
       .then((users) => {
         this.setState({ users });
       })
       .catch(error => console.error('stuff broke', error));
-  }
+  };
 
   render() {
     return (
