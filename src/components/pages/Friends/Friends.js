@@ -8,7 +8,6 @@ import './Friends.scss';
 
 class Friends extends React.Component {
   state = {
-    users: [],
     pendingFriends: [],
     potentialFriends: [],
     currentFriends: [],
@@ -22,16 +21,15 @@ class Friends extends React.Component {
     smashRequests
       .usersAndFriends(authRequests.getCurrentUid())
       .then((users) => {
-        this.setState({ users });
-        this.filterAllUsers();
+        this.filterAllUsers(users);
       })
       .catch(error => console.error('There was an error getting Users and Friends', error));
   };
 
-  filterAllUsers = () => {
-    const pendingFriends = this.state.users.filter(user => user.friendRequest !== '' && user.isPending === true);
-    const potentialFriends = this.state.users.filter(user => user.friendRequest === '');
-    const currentFriends = this.state.users.filter(user => user.friendRequest !== '' && user.isAccepted === true);
+  filterAllUsers = (users) => {
+    const pendingFriends = users.filter(user => user.friendRequest !== '' && user.isPending === true);
+    const potentialFriends = users.filter(user => user.friendRequest === '');
+    const currentFriends = users.filter(user => user.friendRequest !== '' && user.isAccepted === true);
     this.setState({ pendingFriends, potentialFriends, currentFriends });
   };
 
