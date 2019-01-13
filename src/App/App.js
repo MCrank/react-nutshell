@@ -77,7 +77,7 @@ class App extends React.Component {
           <React.Fragment>
             <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
             <div className="container">
-              <div className="row">
+              <div className="row justify-content-center">
                 <Switch>
                   <PublicRoute path="/auth" component={Auth} authed={authed} />
                   <PrivateRoute path="/" exact component={Home} authed={authed} />
