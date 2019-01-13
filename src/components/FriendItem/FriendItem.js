@@ -8,6 +8,14 @@ class FriendItem extends React.Component {
   static propTypes = {
     friend: friendShape,
     status: PropTypes.string,
+    deleteFriend: PropTypes.func,
+  };
+
+  removeFriend = (e) => {
+    e.preventDefault();
+    const friendRequestId = e.target.id;
+    const { deleteFriend } = this.props;
+    deleteFriend(friendRequestId);
   };
 
   render() {
@@ -15,11 +23,13 @@ class FriendItem extends React.Component {
     const makeButtons = () => {
       if (status === 'current') {
         return (
-          <button href="#" className="btn btn-primary btn-sm" id={friend.friendRequestId}>
+          <button href="#" className="btn btn-primary btn-sm" id={friend.friendRequestId} onClick={this.removeFriend}>
             Remove
           </button>
         );
       }
+      // Status not matched so just put an empty <p> for now
+      return <p />;
     };
 
     return (
