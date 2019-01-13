@@ -12,6 +12,15 @@ class FriendItem extends React.Component {
 
   render() {
     const { friend, status } = this.props;
+    const makeButtons = () => {
+      if (status === 'current') {
+        return (
+          <button href="#" className="btn btn-primary btn-sm" id={friend.friendRequestId}>
+            Remove
+          </button>
+        );
+      }
+    };
 
     return (
       <div className="FreindItem card my-4" id={friend.id}>
@@ -19,7 +28,7 @@ class FriendItem extends React.Component {
           <img src={friend.photo} alt="User" />
           {friend.userName}
         </div>
-        <div className="card-body">{status} Buttons Go Here</div>
+        <div className="card-body">{makeButtons()}</div>
       </div>
     );
   }
