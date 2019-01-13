@@ -1,6 +1,7 @@
 import React from 'react';
 import smashRequests from '../../../helpers/data/smashRequests';
 import authRequests from '../../../helpers/data/authRequests';
+import friendRequests from '../../../helpers/data/friendRequests';
 import FriendItem from '../../FriendItem/FriendItem';
 
 import './Friends.scss';
@@ -32,9 +33,18 @@ class Friends extends React.Component {
     this.setState({ pendingFriends, potentialFriends, currentFriends });
   };
 
+  removeFriend = (friendRequestId) => {
+    friendRequests
+      .deleteFriend(friendRequestId)
+      .then(() => {
+        this.getAllUserFriends();
+      })
+      .catch(error => console.error('An error occured deleteing a friend', error));
+  };
+
   render() {
     const { potentialFriends, pendingFriends, currentFriends } = this.state;
-    const friendItemComponents = (friendArray, status) => friendArray.map(friend => <FriendItem key={friend.id} friend={friend} status={status} />);
+    const friendItemComponents = (friendArray, status) => friendArray.map(friend => <FriendItem key={friend.id} friend={friend} status={status} deleteFriend={this.removeFriend} />);
 
     return (
       <div className="Friends">
