@@ -1,28 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import friendShape from '../../helpers/propz/friendShape';
+
+import './FriendItem.scss';
 
 class FriendItem extends React.Component {
   static propTypes = {
-    friendArray: PropTypes.array,
+    friend: friendShape,
     status: PropTypes.string,
   };
 
   render() {
-    const { friendArray, status } = this.props;
+    const { friend, status } = this.props;
 
     return (
-      <div className="FriendItem">
-        <h3>{status}</h3>
-        <div className="card">
-          <div className="card-header">Featured</div>
-          <div className="card-body">
-            <h5 className="card-title">Special title treatment</h5>
-            <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" className="btn btn-primary">
-              Go somewhere
-            </a>
-          </div>
+      <div className="FreindItem card my-4" id={friend.id}>
+        <div className="card-header">
+          <img src={friend.photo} alt="User" />
+          {friend.userName}
         </div>
+        <div className="card-body">{status} Buttons Go Here</div>
       </div>
     );
   }
