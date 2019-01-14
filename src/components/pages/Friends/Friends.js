@@ -51,9 +51,20 @@ class Friends extends React.Component {
       .catch(error => console.error('An error occured creating a new friend request', error));
   };
 
+  acceptFriendRequest = (friendRequestId) => {
+    friendRequests
+      .acceptFriendship(friendRequestId)
+      .then(() => {
+        this.getAllUserFriends();
+      })
+      .catch(error => console.error('An error occured accepting a freindRequest', error));
+  };
+
   render() {
     const { potentialFriends, pendingFriends, currentFriends } = this.state;
-    const friendItemComponents = (friendArray, status) => friendArray.map(friend => <FriendItem key={friend.id} friend={friend} status={status} deleteFriend={this.removeFriend} addFriend={this.addFriendRequest} />);
+    const friendItemComponents = (friendArray, status) => friendArray.map(friend => (
+        <FriendItem key={friend.id} friend={friend} status={status} deleteFriend={this.removeFriend} addFriend={this.addFriendRequest} acceptFriend={this.acceptFriendRequest} />
+    ));
 
     return (
       <div className="Friends">
