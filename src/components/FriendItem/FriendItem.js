@@ -28,6 +28,13 @@ class FriendItem extends React.Component {
           </button>
         );
       }
+      if (status === 'potential') {
+        return (
+          <button href="#" className="btn btn-primary btn-sm" id={friend.uid}>
+            Request
+          </button>
+        );
+      }
       // Status not matched so just put an empty <p> for now
       return <p />;
     };
