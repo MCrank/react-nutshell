@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import authRequests from '../../helpers/data/authRequests';
 import friendShape from '../../helpers/propz/friendShape';
 
 import './FriendItem.scss';
@@ -9,6 +10,7 @@ class FriendItem extends React.Component {
     friend: friendShape,
     status: PropTypes.string,
     deleteFriend: PropTypes.func,
+    addFriend: PropTypes.func,
   };
 
   removeFriend = (e) => {
@@ -16,6 +18,20 @@ class FriendItem extends React.Component {
     const friendRequestId = e.target.id;
     const { deleteFriend } = this.props;
     deleteFriend(friendRequestId);
+  };
+
+  requestFriend = (e) => {
+    e.preventDefault();
+    const friendUid = e.target.id;
+    const uid = authRequests.getCurrentUid();
+    const { addFriend } = this.props;
+    const newFriend = {
+      friendUid,
+      isAccepted: false,
+      isPending: true,
+      uid,
+    };
+    addFriend(newFriend);
   };
 
   render() {
@@ -30,7 +46,7 @@ class FriendItem extends React.Component {
       }
       if (status === 'potential') {
         return (
-          <button href="#" className="btn btn-primary btn-sm" id={friend.uid}>
+          <button href="#" className="btn btn-primary btn-sm" id={friend.uid} onClick={this.requestFriend}>
             Request
           </button>
         );
