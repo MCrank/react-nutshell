@@ -51,8 +51,25 @@ class FriendItem extends React.Component {
           </button>
         );
       }
+      if (status === 'pending' && friend.friendRequest === 'them') {
+        return (
+          <div>
+            <span>
+              <button href="#" className="btn btn-primary btn-sm mx-3">
+                Accept
+              </button>
+            </span>
+            <span>
+              <button href="#" className="btn btn-primary btn-sm mx-3">
+                Decline
+              </button>
+            </span>
+          </div>
+        );
+      }
+      return <p className="font-italic">Pending</p>;
       // Status not matched so just put an empty <p> for now
-      return <p />;
+      // return <p />;
     };
 
     return (

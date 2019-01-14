@@ -22,5 +22,11 @@
     "isAccepted": false,
     "isPending": true,
     "uid": "12345"
+  },
+  "friend5": {
+    "friendUid": "H6wGsn0LvCNxg8zJ0KwLJTQSWQk2",
+    "isAccepted": false,
+    "isPending": true,
+    "uid": "99999"
   }
 }
