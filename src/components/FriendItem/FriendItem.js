@@ -11,6 +11,7 @@ class FriendItem extends React.Component {
     status: PropTypes.string,
     deleteFriend: PropTypes.func,
     addFriend: PropTypes.func,
+    acceptFriend: PropTypes.func,
   };
 
   removeFriend = (e) => {
@@ -34,6 +35,13 @@ class FriendItem extends React.Component {
     addFriend(newFriend);
   };
 
+  acceptFriend = (e) => {
+    e.preventDefault();
+    const friendRequestId = e.target.id;
+    const { acceptFriend } = this.props;
+    acceptFriend(friendRequestId);
+  };
+
   render() {
     const { friend, status } = this.props;
     const makeButtons = () => {
@@ -51,8 +59,23 @@ class FriendItem extends React.Component {
           </button>
         );
       }
-      // Status not matched so just put an empty <p> for now
-      return <p />;
+      if (status === 'pending' && friend.friendRequest === 'them') {
+        return (
+          <div>
+            <span>
+              <button href="#" className="btn btn-primary btn-sm mx-3" id={friend.friendRequestId} onClick={this.acceptFriend}>
+                Accept
+              </button>
+            </span>
+            <span>
+              <button href="#" className="btn btn-primary btn-sm mx-3" id={friend.friendRequestId} onClick={this.removeFriend}>
+                Decline
+              </button>
+            </span>
+          </div>
+        );
+      }
+      return <p className="font-italic">Pending</p>;
     };
 
     return (
